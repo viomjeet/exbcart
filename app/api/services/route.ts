@@ -28,6 +28,7 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
+    debugger
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
     if (!id) {

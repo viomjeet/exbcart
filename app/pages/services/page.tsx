@@ -50,7 +50,7 @@ export default function Services() {
 
   const deleteService = async (id: number) => {
     try {
-      await axios.delete(`/services/api?id=${id}`);
+      await axios.delete(`/api/services?id=${id}`);
       toast.success("Delete successfully.");
       getServices();
     } catch (error: any) {
