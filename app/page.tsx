@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-
+import Link from "next/link";
 
 import {
   ArrowRight, Play, LineChart, Shield, LayoutDashboard, CheckCircle2,
@@ -14,7 +14,7 @@ import {
   ShieldCheck,
   Sparkles,
   Wrench,
-  HelpCircle
+  HelpCircle,
 } from "lucide-react";
 
 const iconMap: Record<string, any> = {
@@ -75,14 +75,14 @@ export default function Home() {
               {banner?.description}
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-600 text-white font-medium hover:bg-teal-500 shadow-lg shadow-teal-600/10 transition-all duration-200 group active:scale-95">
+              <Link href="/pages/services" className="flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-600 text-white font-medium hover:bg-teal-500 shadow-lg shadow-teal-600/10 transition-all duration-200 group active:scale-95">
                 <span>{banner?.primaryBtnText}</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-card border border-foreground/10 font-medium hover:bg-foreground/5 transition-all duration-200 active:scale-95">
+              </Link>
+              <Link href="/pages/contact" className="flex items-center gap-2 px-6 py-3 rounded-xl bg-card border border-foreground/10 font-medium hover:bg-foreground/5 transition-all duration-200 active:scale-95">
                 <Play className="h-4 w-4 fill-current text-foreground/70" />
                 <span>{banner?.secondaryBtnText}</span>
-              </button>
+              </Link>
             </div>
           </div>
           <div className="lg:col-span-6 relative w-full flex justify-center lg:justify-end">
@@ -142,11 +142,6 @@ export default function Home() {
       </div>
 
       <div className="w-full max-w-7xl mx-auto px-6 py-12 md:py-20 bg-background text-foreground">
-
-
-
-
-
         {/* Top Header Section */}
         <div className="max-w-3xl mb-16">
           <h1 className="text-4xl font-extrabold tracking-tight mb-4 md:text-5xl">

@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ShoppingBag, Cloud, Code, Database, Link, Gauge, HelpCircle, ArrowRight } from "lucide-react";
-const iconMap: Record<string, any> = { ShoppingBag, Cloud, Code, Database, Link, Gauge };
+import Link from "next/link";
+import { ShoppingBag, Cloud, Code, Database, Gauge, HelpCircle, ArrowRight } from "lucide-react";
+const iconMap: Record<string, any> = { ShoppingBag, Cloud, Code, Database, Gauge };
 interface ServiceItem {
   title: string;
   desc: string;
@@ -72,10 +73,10 @@ export default function ServicesPage() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-teal-500 group-hover:gap-3 transition-all duration-300 cursor-pointer w-fit select-none">
+              <Link href="/pages/contact" className="flex items-center gap-1.5 text-xs font-semibold text-teal-500 group-hover:gap-3 transition-all duration-300 cursor-pointer w-fit select-none">
                 <span>Learn more</span>
                 <ArrowRight className="h-3.5 w-3.5" />
-              </div>
+              </Link>
             </div>
           );
         })}
