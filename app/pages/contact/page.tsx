@@ -4,12 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Mail, MapPin, Clock, Send, HelpCircle } from "lucide-react";
 
-const iconMap: Record<string, any> = {
-  Mail,
-  MapPin,
-  Clock
-};
-
+const iconMap: Record<string, any> = { Mail, MapPin, Clock };
 interface ContactInfo {
   title: string;
   subtitle: string;
@@ -18,8 +13,6 @@ interface ContactInfo {
 
 export default function ContactPage() {
   const [info, setInfo] = useState<ContactInfo | null>(null);
-  
-  // Form States
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ success: boolean; msg: string } | null>(null);
@@ -30,16 +23,13 @@ export default function ContactPage() {
       .catch((err) => console.error("Contact data fetch error:", err));
   }, []);
 
-  // Form Submit Handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      // Mock API call for form submission (Aap ise apne real backend endpoint se replace kar sakte hain)
-      await new Promise((resolve) => setTimeout(resolve, 1500)); 
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       setSubmitStatus({ success: true, msg: "Thank you! Your message has been sent successfully." });
       setFormData({ name: "", email: "", message: "" }); // Reset Form
     } catch (error) {
@@ -60,8 +50,6 @@ export default function ContactPage() {
   return (
     <div className="w-full min-h-[calc(100vh-69px)] bg-background text-foreground py-12 md:py-20 px-6 transition-colors duration-200">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-        
-        {/* LEFT COLUMN: DYNAMIC INFO CARDS */}
         <div className="flex flex-col gap-8">
           <div>
             <h1 className="text-4xl font-black tracking-tight leading-none mb-4">
@@ -97,12 +85,9 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: INTERACTIVE FORM */}
         <div className="w-full p-6 sm:p-8 rounded-2xl bg-card border border-foreground/5 shadow-md relative overflow-hidden">
           <h2 className="text-xl font-bold tracking-tight mb-6">Send us a Message</h2>
-          
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            {/* Name Input */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-foreground/60">Full Name</label>
               <input
@@ -115,7 +100,6 @@ export default function ContactPage() {
               />
             </div>
 
-            {/* Email Input */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-foreground/60">Email Address</label>
               <input
@@ -128,7 +112,6 @@ export default function ContactPage() {
               />
             </div>
 
-            {/* Message Input */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-foreground/60">Your Message</label>
               <textarea
@@ -141,18 +124,15 @@ export default function ContactPage() {
               />
             </div>
 
-            {/* Status Messages */}
             {submitStatus && (
-              <div className={`p-3 rounded-xl text-xs font-medium border ${
-                submitStatus.success 
-                  ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-500' 
+              <div className={`p-3 rounded-xl text-xs font-medium border ${submitStatus.success
+                  ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-500'
                   : 'bg-rose-500/5 border-rose-500/20 text-rose-500'
-              }`}>
+                }`}>
                 {submitStatus.msg}
               </div>
             )}
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
@@ -169,7 +149,6 @@ export default function ContactPage() {
             </button>
           </form>
         </div>
-
       </div>
     </div>
   );

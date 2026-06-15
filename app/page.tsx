@@ -27,7 +27,6 @@ const iconMap: Record<string, any> = {
   Wrench,
 };
 
-
 interface BannerData {
   tagline: string;
   headingTitle: string;
@@ -47,10 +46,9 @@ export default function Home() {
     axios.get("api/").then((response) => {
       setServiceCategories(response?.data?.services || []);
       setBanner(response?.data?.banner || []);
-    })
-      .catch((err) => {
-        toast.error("Fetch karne mein error:", err);
-      });
+    }).catch((err) => {
+      toast.error("Fetch karne mein error:", err);
+    });
   };
 
   useEffect(() => {
