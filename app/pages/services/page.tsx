@@ -1,112 +1,102 @@
 'use client';
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Plus, Briefcase, Trash2 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { ShoppingBag, Cloud, Code, Database, Link, Gauge, HelpCircle, ArrowRight } from "lucide-react";
 
+// Mapping keys from API to exact Lucide Components
+const iconMap: Record<string, any> = {
+  ShoppingBag,
+  Cloud,
+  Code,
+  Database,
+  Link,
+  Gauge
+};
 
-interface Service {
-  id: number;
-  name: string;
+interface ServiceItem {
+  title: string;
+  desc: string;
+  icon: string;
+  tag: string;
 }
 
-export default function Services() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [serviceName, setServiceName] = useState("");
+interface ServicesData {
+  header: { badge: string; title: string; subtitle: string };
+  items: ServiceItem[];
+}
 
-  const getServices = () => {
-    axios.get("/api/services")
-      .then((response) => {
-        setServices(response.data);
-      })
-      .catch((err) => {
-        toast.error("Fetch karne mein error:", err);
-      });
-  };
+export default function ServicesPage() {
+  const [data, setData] = useState<ServicesData | null>(null);
 
   useEffect(() => {
-    getServices();
+    axios.get("/api/services")
+      .then((res) => setData(res.data))
+      .catch((err) => console.error("Services data fetch error:", err));
   }, []);
 
-  const addService = async () => {
-    if (!serviceName.trim()) {
-      toast.error("Service name cannot be empty!");
-      return;
-    }
-    try {
-      const nextId = services.length > 0 ? Math.max(...services.map(s => s.id)) + 1 : 1;
-      const response = await axios.post("/api/services", {
-        id: nextId,
-        name: serviceName
-      });
-      toast.success("Service added successfully.");
-      setServiceName("");
-      getServices();
-    } catch (error: any) {
-      toast.error(error);
-    }
-  };
-
-  const deleteService = async (id: number) => {
-    try {
-      await axios.delete(`/api/services?id=${id}`);
-      toast.success("Delete successfully.");
-      getServices();
-    } catch (error: any) {
-      toast.error("Error:", error);
-    }
-  };
+  // Premium Shimmer Loader
+  if (!data) {
+    return (
+      <div className="w-full min-h-[calc(100vh-69px)] bg-background flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full border-4 border-foreground/10 border-t-teal-500 animate-spin" />
+      </div>
+    );
+  }
 
   return (
-
-
-    <div className="w-full min-h-[calc(100vh-69px)] bg-background text-foreground flex flex-col p-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Services List</h1>
+    <div className="w-full min-h-[calc(100vh-69px)] bg-background text-foreground py-16 px-6 transition-colors duration-200">
+      
+      {/* HEADER SECTION */}
+      <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-4 mb-16 md:mb-24">
+        <span className="px-3 py-1 rounded-full bg-foreground/5 border border-foreground/10 text-xs font-semibold tracking-wider uppercase text-teal-500">
+          {data.header.badge}
+        </span>
+        <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-[1.15] max-w-2xl">
+          {data.header.title}
+        </h1>
+        <p className="text-sm sm:text-base text-foreground/60 max-w-xl leading-relaxed">
+          {data.header.subtitle}
+        </p>
       </div>
-      <div className="w-full max-w-3xl mx-auto bg-background text-foreground flex flex-col gap-6">
 
-        {services.length === 0 ? (
-          <p className="text-sm text-foreground/50 py-4">No services found or loading...</p>
-        ) : (
-          <div className="flex flex-col gap-2 w-full">
-            {services.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between px-4 py-3 rounded-lg bg-foreground/5 hover:bg-foreground/10 transition-colors w-full"
-              >
-                <div className="flex items-center gap-3">
-                  <Briefcase className="h-4 w-4 text-foreground/60" />
-                  <span className="text-sm font-medium">{item.name}</span>
+      {/* DYNAMIC SERVICES GRID */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {data.items.map((service, idx) => {
+          const IconComponent = iconMap[service.icon] || HelpCircle;
+          return (
+            <div 
+              key={idx}
+              className="group p-6 rounded-2xl bg-card border border-foreground/5 shadow-sm hover:border-foreground/10 hover:shadow-md transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
+            >
+              <div>
+                {/* Top Badge & Icon Row */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="p-3 rounded-xl bg-foreground/5 text-foreground group-hover:bg-teal-500 group-hover:text-white transition-colors duration-300">
+                    <IconComponent className="h-5 w-5" />
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-teal-500/10 text-teal-500 dark:bg-teal-500/20">
+                    {service.tag}
+                  </span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => deleteService(item.id)}
-                  className="p-1.5 rounded-md text-foreground/40 hover:text-red-500 hover:bg-red-500/10 transition-colors"
-                  aria-label="Delete Service"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+
+                {/* Service Meta */}
+                <h3 className="text-xl font-bold tracking-tight mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-foreground/60 leading-relaxed mb-6">
+                  {service.desc}
+                </p>
               </div>
-            ))}
-          </div>
-        )}
-        <div className="flex items-center gap-2 pt-4 border-t border-foreground/10 w-full mt-2">
-          <input
-            type="text"
-            placeholder="Enter service name..."
-            value={serviceName}
-            onChange={(e) => setServiceName(e.target.value)}
-            className="flex-1 px-4 py-2 text-sm bg-foreground/5 border border-foreground/10 rounded-lg focus:outline-none focus:border-foreground/30 text-foreground placeholder:text-foreground/40 transition-colors"
-          />
-          <button type="button" onClick={addService}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-foreground text-background hover:opacity-90 transition-colors shrink-0"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Add</span>
-          </button>
-        </div>
+
+              {/* Interactive Bottom Trigger */}
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-teal-500 group-hover:gap-3 transition-all duration-300 cursor-pointer w-fit select-none">
+                <span>Learn more</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </div>
+            </div>
+          );
+        })}
       </div>
 
     </div>

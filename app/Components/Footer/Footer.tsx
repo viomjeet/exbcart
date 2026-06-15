@@ -27,7 +27,7 @@ const socialIconMap: Record<string, any> = {
 
 interface FooterData {
     brand: { name: string; description: string };
-    sections: Array<{ title: string; links: Array<{ name: string; path: string }> }>;
+    sections: Array<{ title: string; links: Array<{ name: string; path: string, disabled: boolean }> }>;
     socials: Array<{ platform: string; url: string; icon: string }>;
     copyright: string;
 }
@@ -63,6 +63,7 @@ export default function Footer() {
                                     <li key={linkIdx}>
                                         <Link
                                             href={link.path}
+                                            onClick={(e) => { if (link.disabled) { e.preventDefault(); } }}
                                             className="text-sm text-foreground/70 hover:text-foreground transition-colors duration-150"
                                         >
                                             {link.name}
@@ -80,18 +81,20 @@ export default function Footer() {
                     <div className="flex gap-3">
                         {data.socials.map((social, idx) => {
                             const IconComponent = socialIconMap[social.icon] || HelpCircle;
-                            return (
-                                <a
-                                    key={idx}
-                                    href={social.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-lg bg-foreground/5 hover:bg-foreground/10 text-foreground/70 hover:text-foreground transition-all duration-150"
-                                    aria-label={social.platform}
-                                >
-                                    <IconComponent className="h-4 w-4" />
-                                </a>
-                            );
+                            if (social.platform !== "Twitter") {
+                                return (
+                                    <a
+                                        key={idx}
+                                        href={social.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-2 rounded-lg bg-foreground/5 hover:bg-foreground/10 text-foreground/70 hover:text-foreground transition-all duration-150"
+                                        aria-label={social.platform}
+                                    >
+                                        <IconComponent className="h-4 w-4" />
+                                    </a>
+                                );
+                            }
                         })}
                     </div>
                 </div>

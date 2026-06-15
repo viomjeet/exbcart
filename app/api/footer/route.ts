@@ -9,34 +9,34 @@ const footerData = {
     {
       title: "Services",
       links: [
-        { name: "Web Development", path: "/services" },
-        { name: "App Development", path: "/services" },
-        { name: "UI/UX Design", path: "/services" },
-        { name: "SEO Optimization", path: "/services" }
+        { name: "Web Development", path: "/pages/services", disabled: false },
+        { name: "App Development", path: "/pages/services", disabled: false },
+        { name: "UI/UX Design", path: "/pages/services", disabled: false },
+        { name: "SEO Optimization", path: "/pages/services", disabled: false }
       ]
     },
     {
       title: "Company",
       links: [
-        { name: "About Us", path: "/about" },
-        { name: "Our Work", path: "/portfolio" },
-        { name: "Careers", path: "/careers" },
-        { name: "Contact", path: "/contact" }
+        { name: "About Us", path: "/pages/about", disabled: false },
+        { name: "Our Work", path: "/pages/portfolio", disabled: true },
+        { name: "Careers", path: "/pages/careers", disabled: true },
+        { name: "Contact", path: "/pages/contact", disabled: false }
       ]
     },
     {
       title: "Legal",
       links: [
-        { name: "Privacy Policy", path: "/privacy" },
-        { name: "Terms of Service", path: "/terms" },
-        { name: "Cookie Policy", path: "/cookies" }
+        { name: "Privacy Policy", path: "/pages/privacy", disabled: true },
+        { name: "Terms of Service", path: "/pages/terms", disabled: true },
+        { name: "Cookie Policy", path: "/pages/cookies", disabled: true }
       ]
     }
   ],
   socials: [
-    { platform: "Github", url: "https://github.com", icon: "Github" },
-    { platform: "Linkedin", url: "https://linkedin.com", icon: "Linkedin" },
-    { platform: "Twitter", url: "https://twitter.com", icon: "Twitter" }
+    { platform: "Github", url: "https://github.com/viomjeet", icon: "Github" },
+    { platform: "Linkedin", url: "https://linkedin.com/in/viomjeet/", icon: "Linkedin" },
+    { platform: "Twitter", url: "https://twitter.com/viomjeet", icon: "Twitter" }
   ],
   copyright: `© ${new Date().getFullYear()} EXBCART. All rights reserved.`
 };
