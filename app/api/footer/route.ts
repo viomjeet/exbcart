@@ -19,7 +19,7 @@ const footerData = {
       title: "Company",
       links: [
         { name: "About Us", path: "/pages/about", disabled: false },
-        { name: "Our Work", path: "/pages/portfolio", disabled: true },
+        { name: "products", path: "/pages/products", disabled: false },
         { name: "Careers", path: "/pages/careers", disabled: true },
         { name: "Contact", path: "/pages/contact", disabled: false }
       ]

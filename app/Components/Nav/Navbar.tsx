@@ -10,6 +10,7 @@ const menus = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'About', path: '/pages/about', icon: Info },
     { name: 'Services', path: '/pages/services', icon: Briefcase },
+    { name: 'Products', path: '/pages/products', icon: Briefcase },
     { name: 'Contact', path: '/pages/contact', icon: Phone },
 ];
 
