@@ -1,22 +1,16 @@
 import { connectDB } from '@/lib/db';
 import Link from "next/link";
 export default async function HomePage() {
-
-
     let products: any = [];
     let errorMsg = '';
-
     try {
         const pool = await connectDB();
         const result = await pool.query('SELECT * FROM ProductDetails');
-        products = result.rows; // 👈 Purana .recordset hata kar .rows kiya
+        products = result.rows;
     } catch (err: any) {
-        // English professional error taaki terminal ka asli error screen par dikhe
         errorMsg = JSON.stringify(err) || err.toString();
     }
-
     return (
-
         <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto mb-10 flex justify-between items-center border-b pb-5 border-gray-200">
                 <div>
@@ -58,24 +52,21 @@ export default async function HomePage() {
                     <p className="text-xl text-gray-500 font-semibold">No product found...</p>
                 </div>
             )}
-
-
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {products.map((item: any) => (
 
-                        /* 1. key aur href me productid lowercase kiya */
                         <Link key={item.productid} href={`/pages/products/${item.productid}`}
                             className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 flex flex-col group"
                         >
                             <div className="w-full h-56 bg-gray-200 overflow-hidden relative">
-                                {/* 2. imageurl aur productname lowercase kiya */}
+
                                 <img
                                     src={item.imageurl || "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&q=80"}
                                     alt={item.productname}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                 />
-                                {/* 3. stockquantity lowercase kiya */}
+
                                 {item.stockquantity > 0 && (
                                     <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
                                         Only {item.stockquantity} Left!
@@ -84,12 +75,10 @@ export default async function HomePage() {
                             </div>
 
                             <div className="p-5 flex flex-col flex-grow">
-                                {/* 4. productname lowercase kiya */}
                                 <h2 className="text-lg font-bold text-gray-800 line-clamp-1 group-hover:text-blue-600 transition-colors">
                                     {item.productname}
                                 </h2>
 
-                                {/* 5. productdescription lowercase kiya */}
                                 <p className="text-gray-500 text-sm mt-2 line-clamp-2 flex-grow">
                                     {item.productdescription}
                                 </p>
@@ -97,19 +86,16 @@ export default async function HomePage() {
                                 <div className="mt-5 pt-4 border-t border-gray-50 flex items-center justify-between">
                                     <div>
                                         <span className="text-xs text-gray-400 block font-medium">Price</span>
-                                        {/* 6. price lowercase kiya aur Number me wrap kiya taaki crash na ho */}
                                         <span className="text-xl font-black text-gray-950">
                                             ₹{Number(item.price).toLocaleString('en-IN')}
                                         </span>
                                     </div>
-
                                     <button className="bg-gray-900 hover:bg-blue-600 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 active:scale-95">
                                         Add to Cart
                                     </button>
                                 </div>
                             </div>
                         </Link>
-
                     ))}
                 </div>
             </div>

@@ -43,28 +43,19 @@ export default async function ProductDetailPage({ params }: { params: any }) {
 
     return (
         <div className="min-h-screen bg-white text-gray-900 flex flex-col antialiased selection:bg-blue-600 selection:text-white">
-
-            {/* Top Minimal Navigation Bar */}
             <header className="w-full border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50 px-6 lg:px-12 py-5 flex items-center justify-between">
                 <Link href="/pages/products" className="group text-sm font-semibold text-gray-500 hover:text-gray-900 flex items-center gap-2 transition-colors">
                     <span className="inline-block transition-transform group-hover:-translate-x-1">←</span> Back to Shop
                 </Link>
-                {/* 1. productid lowercase kiya */}
                 <div className="text-[11px] uppercase tracking-widest text-gray-400 font-bold">
                     Catalog Item / #{product.productid}
                 </div>
             </header>
 
-            {/* Main Full-Page Split Grid */}
             <main className="flex-grow grid grid-cols-1 lg:grid-cols-12">
-
-                {/* LEFT SIDE: Immersive Light Image Stage (Spans 7 columns) */}
                 <section className="lg:col-span-7 bg-gray-50/60 flex items-center justify-center p-6 lg:p-16 relative border-b lg:border-b-0 lg:border-r border-gray-100">
-                    {/* Subtle aesthetic gradient layer */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-gray-100/50 via-transparent to-transparent pointer-events-none"></div>
-
                     <div className="w-full max-w-xl aspect-square rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500 bg-white border border-gray-100 p-2 group">
-                        {/* 2. imageurl aur productname lowercase kiya */}
                         <img
                             src={product.imageurl}
                             alt={product.productname}
@@ -73,17 +64,13 @@ export default async function ProductDetailPage({ params }: { params: any }) {
                     </div>
                 </section>
 
-                {/* RIGHT SIDE: Information & Premium Control Panel (Spans 5 columns) */}
                 <section className="lg:col-span-5 p-8 lg:p-16 flex flex-col justify-between bg-white relative">
 
                     <div className="space-y-8">
-                        {/* Meta Badges */}
                         <div className="flex items-center gap-3">
-                            {/* 3. productid lowercase kiya */}
                             <span className="text-[10px] bg-gray-50 border border-gray-200/60 text-gray-500 font-mono px-3 py-1 rounded-full uppercase tracking-widest shadow-inner">
                                 SKU-{product.productid}
                             </span>
-                            {/* 4. stockquantity lowercase kiya */}
                             <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest border ${product.stockquantity > 0
                                 ? 'bg-green-50 border-green-200 text-green-700'
                                 : 'bg-red-50 border-red-200 text-red-700'
@@ -91,38 +78,27 @@ export default async function ProductDetailPage({ params }: { params: any }) {
                                 {product.stockquantity > 0 ? 'In Stock' : 'Out of Stock'}
                             </span>
                         </div>
-
-                        {/* Title & Description */}
                         <div>
-                            {/* 5. productname lowercase kiya */}
                             <h1 className="text-4xl lg:text-5xl font-black text-gray-900 tracking-tight leading-tight">
                                 {product.productname}
                             </h1>
-                            {/* 6. productdescription lowercase kiya */}
                             <p className="text-gray-600 mt-6 leading-relaxed text-base font-normal">
                                 {product.productdescription}
                             </p>
                         </div>
-
-                        {/* Inventory Specs Border Box */}
                         <div className="p-4 rounded-xl bg-gray-50 border border-gray-200/60 flex justify-between items-center">
                             <div>
                                 <span className="text-[11px] uppercase tracking-wider text-gray-400 block font-bold">Delivery Status</span>
-                                {/* 7. stockquantity lowercase kiya */}
                                 <span className="text-sm font-semibold text-gray-700 mt-0.5 block">
                                     {product.stockquantity > 0 ? `Ready to ship (${product.stockquantity} units available)` : 'Restocking soon'}
                                 </span>
                             </div>
-                            {/* 8. stockquantity lowercase kiya */}
                             <div className={`w-2.5 h-2.5 rounded-full ${product.stockquantity > 0 ? 'bg-green-500' : 'bg-red-400'} animate-pulse`}></div>
                         </div>
                     </div>
-
-                    {/* Footer Pricing & Action Panel */}
                     <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                         <div>
                             <span className="text-[11px] text-gray-400 block font-bold uppercase tracking-widest">Price</span>
-                            {/* 9. price lowercase kiya aur Number me convert kiya string crash se bachne ke liye */}
                             <span className="text-4xl font-black text-gray-900 tracking-tight mt-0.5 block">
                                 ₹{Number(product.price).toLocaleString('en-IN')}
                             </span>
